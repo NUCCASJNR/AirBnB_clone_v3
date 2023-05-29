@@ -26,7 +26,7 @@ def error(error):
     """
     Handles 404 error
     """
-    return jsonify({"error": "Not found"})
+    return make_response(jsonify({"error": "Not found"}), 404)
 
 
 if __name__ == "__main__":
