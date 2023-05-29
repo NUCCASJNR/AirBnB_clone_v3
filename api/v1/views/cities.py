@@ -57,3 +57,40 @@ def delete_city_using_cityid(city_id):
         storage.save()
         return jsonify({})
     abort(404)
+
+
+@app_views.route("/cities", methods=["POST"], strict_slashes=False)
+def post_city():
+    """
+    Posts a new city
+    """
+    if not request.get_json():
+        return make_response(jsonify({"error": "Not a JSON"}), 400)
+    if 'name' not in request.get_json():
+        return make_response(jsonify({"error": "Missing name"}), 400)
+    city_data = request.get_json()
+    city = City()
+    for key, value in city_data.items():
+        setattr(city, key, value)
+    city.save()
+    return jsonify(city.to_dict()), 201
+
+
+@app_views.route("/cities/<city_id>", methods=["PUT"],
+                 strict_slashes=False)
+def update_city(city_id):
+    """
+    Updates a city using the city id
+    Returns a 404 error if the city id is not linked to any city
+    """
+    if not request.get_json():
+        return make_response(jsonify({"error": "Not a JSON"}), 400)
+    city = storage.get(City, city_id)
+    keys_ignore = ["id", "updated_at", "created_at"]
+    if city:
+        for key, value in request.get_json().items():
+            if key not in keys_ignore:
+                setattr(city, key, value)
+        storage.save()
+        return jsonify(city.to_dict()), 200
+    abort(404)
