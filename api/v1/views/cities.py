@@ -40,3 +40,20 @@ def retrieve_city_using_cityid(city_id):
     if city:
         return jsonify(city.to_dict())
     abort(404)
+
+
+@app_views.route("/cities/<city_id>", methods=["DELETE"],
+                 strict_slashes=False)
+def delete_state_using_stateid(state_id):
+    """
+    Deletes a city using the city id
+    Raises a 404 error If the city_id is not linked to any city object
+    Returns an empty dictionary with the status code 200
+    """
+
+    city = storage.get(City, city_id)
+    if state:
+        city.delete()
+        storage.save()
+        return jsonify({})
+    abort(404)
