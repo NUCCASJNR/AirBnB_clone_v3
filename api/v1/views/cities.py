@@ -38,7 +38,7 @@ def retrieve_city_using_cityid(city_id):
 
     city = storage.get(City, city_id)
     if city:
-        return jsonify(city.to_dict())
+        return jsonify(city.to_dict()), 200
     abort(404)
 
 
