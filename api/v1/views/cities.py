@@ -61,7 +61,7 @@ def delete_city_using_cityid(city_id):
 
 @app_views.route("states/<state_id>/cities", methods=["POST"],
                  strict_slashes=False)
-def post_city():
+def post_city(state_id):
     """
     Posts a new city
     """
@@ -70,7 +70,7 @@ def post_city():
     if 'name' not in request.get_json():
         return make_response(jsonify({"error": "Missing name"}), 400)
     state_data = request.get_json()
-    state = State()
+    state = storage.get(State, state_id)
     for key, value in state_data.items():
         setattr(state, key, value)
     state.save()
