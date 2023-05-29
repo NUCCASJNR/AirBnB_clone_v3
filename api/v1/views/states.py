@@ -51,3 +51,20 @@ def delete_state_using_stateid(state_id):
         storage.save()
         return jsonify({})
     abort(404)
+
+
+@app_views.route("/states", methods=["POST"], strict_slashes=False)
+def post_state():
+    """
+    Posts a new city
+    """
+    if not request.get_json():
+        return make_response(jsonify({"error": "Not a JSON"}), 400)
+    if 'name' not in request.get_json():
+        return make_response(jsonify({"error": "Missing name"}), 400)
+    state_data = request.get_json()
+    state = State()
+    for key, value in state_data.items():
+        setattr(state, key, value)
+    state.save()
+    return jsonify(state.to_dict())
