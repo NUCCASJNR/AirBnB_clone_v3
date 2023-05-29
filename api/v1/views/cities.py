@@ -59,7 +59,8 @@ def delete_city_using_cityid(city_id):
     abort(404)
 
 
-@app_views.route("/cities", methods=["POST"], strict_slashes=False)
+@app_views.route("states/<state_id>/cities", methods=["POST"],
+                 strict_slashes=False)
 def post_city():
     """
     Posts a new city
@@ -68,12 +69,12 @@ def post_city():
         return make_response(jsonify({"error": "Not a JSON"}), 400)
     if 'name' not in request.get_json():
         return make_response(jsonify({"error": "Missing name"}), 400)
-    city_data = request.get_json()
-    city = City()
-    for key, value in city_data.items():
-        setattr(city, key, value)
-    city.save()
-    return jsonify(city.to_dict()), 201
+    state_data = request.get_json()
+    state = State()
+    for key, value in state_data.items():
+        setattr(state, key, value)
+    state.save()
+    return jsonify(state.to_dict()), 201
 
 
 @app_views.route("/cities/<city_id>", methods=["PUT"],
