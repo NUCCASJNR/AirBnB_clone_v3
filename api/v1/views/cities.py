@@ -13,7 +13,7 @@ from api.v1.views import app_views
 
 @app_views.route("/states/<state_id>/cities", methods=["GET"],
                  strict_slashes=False)
-def retrieve_city_using_stateid(state_id):
+def retrieve_city(state_id):
     """
     Retrieves the list of all city object of a state
     Raises a 404 error if the state id isnt linked to any state
@@ -44,7 +44,7 @@ def retrieve_city_using_cityid(city_id):
 
 @app_views.route("/cities/<city_id>", methods=["DELETE"],
                  strict_slashes=False)
-def delete_state_using_stateid(state_id):
+def delete_city_using_cityid(city_id):
     """
     Deletes a city using the city id
     Raises a 404 error If the city_id is not linked to any city object
