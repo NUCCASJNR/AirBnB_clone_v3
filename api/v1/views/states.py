@@ -67,4 +67,4 @@ def post_state():
     for key, value in state_data.items():
         setattr(state, key, value)
     state.save()
-    return jsonify(state.to_dict())
+    return jsonify(state.to_dict()), 201
