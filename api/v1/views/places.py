@@ -45,7 +45,7 @@ def retrieve_place_using_placeid(place_id):
                  strict_slashes=False)
 def delete_place_using_placeid(place_id):
     """
-    Deletes a state using the place id
+    Deletes a placee using the place id
     Raises a 404 error If the place_id is not linked to any Place object
     Returns an empty dictionary with the status code 200
     """
@@ -76,7 +76,7 @@ def post_place(city_id):
     place_data = request.get_json()
     place_data['city_id'] = city_id
     place = Place()
-    user = storage.get(User, user_id)
+    user = storage.get(User, place_data['user_id'])
     if not user:
         abort(404)
     for key, value in place_data.items():
