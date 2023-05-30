@@ -64,15 +64,15 @@ def post_place(city_id):
     """
     Posts a new place
     """
+    city = storage.get(City, city_id)
+    if not city:
+        abort(404)
     if not request.get_json():
         return make_response(jsonify({"error": "Not a JSON"}), 400)
     if 'user_id' not in request.get_json():
         return make_response(jsonify({"error": "Missing user_id"}), 400)
     if 'name' not in request.get_json():
         return make_response(jsonify({"error": "Missing name"}), 400)
-    city = storage.get(City, city_id)
-    if not city:
-        abort(404)
     place_data = request.get_json()
     place_data['city_id'] = city_id
     place = Place()
