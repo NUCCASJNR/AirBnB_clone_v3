@@ -37,7 +37,7 @@ def retrieve_place_using_placeid(place_id):
 
     place = storage.get(Place, place_id)
     if place:
-        return jsonify(place.to_dict())
+        return jsonify(place.to_dict()), 200
     abort(404)
 
 
