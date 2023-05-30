@@ -74,6 +74,7 @@ def post_place(city_id):
     if not city:
         abort(404)
     place_data = request.get_json()
+    place_data['city_id'] = city_id
     place = Place()
     user = storage.get(User, user_id)
     if not user:
