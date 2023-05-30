@@ -52,7 +52,7 @@ def delete_city_using_cityid(city_id):
     """
 
     city = storage.get(City, city_id)
-    if state:
+    if city:
         city.delete()
         storage.save()
         return jsonify({})
