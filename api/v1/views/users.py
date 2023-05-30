@@ -69,7 +69,7 @@ def post_user():
     for key, value in user_data.items():
         setattr(user, key, value)
     user.save()
-    return jsonify(state.to_dict()), 201
+    return jsonify(user.to_dict()), 201
 
 
 @app_views.route("/users/<user_id>", methods=["PUT"],
