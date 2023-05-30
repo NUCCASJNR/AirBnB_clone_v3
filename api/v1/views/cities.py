@@ -69,12 +69,11 @@ def post_city(state_id):
         return make_response(jsonify({"error": "Not a JSON"}), 400)
     if 'name' not in request.get_json():
         return make_response(jsonify({"error": "Missing name"}), 400)
-    state_data = request.get_json()
     state = storage.get(State, state_id)
-    for key, value in state_data.items():
-        setattr(state, key, value)
-    setattr(state, 'state_id', state.id)
-    state.save()
+    city_data = request.get_json()
+    city = City(**city_data)
+    city.state_id = state.id
+    city.save()
     return jsonify(state.to_dict()), 201
 
 
