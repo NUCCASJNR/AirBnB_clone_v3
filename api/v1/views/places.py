@@ -71,10 +71,12 @@ def post_place(city_id):
     if 'name' not in request.get_json():
         return make_response(jsonify({"error": "Missing name"}), 400)
     city = storage.get(City, city_id)
+    if not city:
+        abort(404)
     place_data = request.get_json()
     place = Place()
     user = storage.get(User, user_id)
-    if not city and user:
+    if not user:
         abort(404)
     for key, value in place_data.items():
         setattr(place, key, value)
