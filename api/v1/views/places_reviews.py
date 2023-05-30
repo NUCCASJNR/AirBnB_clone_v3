@@ -16,7 +16,7 @@ from flask import jsonify, abort, make_response
 def retrieve_review_uisng_placeid(place_id):
     """
     retrieves all review objects of a place
-    raises a 404 error if the place_id isnt linked to any place
+    raises a 404 error if the place_id isnt linked to any review
     """
 
     review_list = []
@@ -25,4 +25,18 @@ def retrieve_review_uisng_placeid(place_id):
         for reviewid in place.reviews:
             review_list.append(reviewid.to_dict())
         return jsonify(review_list)
+    abort(404)
+
+
+@app_views.route("/reviews/<review_id>", methods=["GET"],
+                 strict_slashes=False)
+def retrieve_review(review_id):
+    """
+    Retrieves a review using the review id
+    Raises a 404 error if the review_id isnt linked to any review
+    """
+
+    review = storage.get(Review, review_id)
+    if review:
+        return jsonify(review.to_dict())
     abort(404)
