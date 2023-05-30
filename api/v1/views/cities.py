@@ -70,11 +70,13 @@ def post_city(state_id):
     if 'name' not in request.get_json():
         return make_response(jsonify({"error": "Missing name"}), 400)
     state = storage.get(State, state_id)
-    city_data = request.get_json()
-    city = City(**city_data)
-    city.state_id = state.id
-    city.save()
-    return jsonify(state.to_dict()), 201
+    if state:
+        city_data = request.get_json()
+        city = City(**city_data)
+        city.state_id = state.id
+        city.save()
+        return jsonify(state.to_dict()), 201
+    abort(404)
 
 
 @app_views.route("/cities/<city_id>", methods=["PUT"],
