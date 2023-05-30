@@ -72,7 +72,9 @@ def post_city(state_id):
     state = storage.get(State, state_id)
     if state:
         city_data = request.get_json()
-        city = City(**city_data)
+        city = City()
+        for key, value in city_data.items():
+            setattr(city, key, value)
         city.state_id = state.id
         city.save()
         return jsonify(state.to_dict()), 201
