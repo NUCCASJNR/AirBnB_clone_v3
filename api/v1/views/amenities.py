@@ -1,12 +1,12 @@
 #!/usr/bin/python3
 
 """
-a new view for State objects that handles all default RESTFul API actions
+a new view for Amenity objects that handles all default RESTFul API actions
 """
 from models import storage
 from api.v1.views import app_views
 from flask import jsonify, abort, request, make_response
-from models.state import Amenity
+from models.amenity import Amenity
 
 
 @app_views.route("/amenities", methods=["GET"], strict_slashes=False)
