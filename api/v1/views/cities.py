@@ -73,6 +73,7 @@ def post_city(state_id):
     state = storage.get(State, state_id)
     for key, value in state_data.items():
         setattr(state, key, value)
+    setattr(state, 'state_id', state.id)
     state.save()
     return jsonify(state.to_dict()), 201
 
