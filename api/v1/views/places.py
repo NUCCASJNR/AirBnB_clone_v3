@@ -58,12 +58,11 @@ def delete_place_using_placeid(place_id):
     abort(404)
 
 
-@app_views.route("/cities/city_id/places", methods=["POST"],
+@app_views.route("cities/<city_id>/places/", methods=["POST"],
                  strict_slashes=False)
-def post_place(city_id):
+def new_post(city_id):
     """
-    Posts a new place
-    """
+    posts  aa new place"""
     city = storage.get(City, city_id)
     if not city:
         abort(404)
@@ -73,6 +72,7 @@ def post_place(city_id):
         return make_response(jsonify({"error": "Missing user_id"}), 400)
     if 'name' not in request.get_json():
         return make_response(jsonify({"error": "Missing name"}), 400)
+    place_data = request.get_json()
     place_data = request.get_json()
     place_data['city_id'] = city_id
     place = Place()
