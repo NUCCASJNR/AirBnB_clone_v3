@@ -8,7 +8,8 @@ from models import storage
 from api.v1.views import app_views
 from models.review import Review
 from models.place import Place
-from flask import jsonify, abort, make_response
+from models.user import User
+from flask import jsonify, abort, make_response, request
 
 
 @app_views.route("/places/<place_id>/reviews", methods=["GET"],
@@ -55,3 +56,23 @@ def delete_review(review_id):
         storage.save()
         return jsonify({})
     abort(404)
+
+@app_views.route("/places/<place_id>/reviews", methods=["POST"],
+                  strict_slashes=False)
+def post_review(place_id):
+    """Posts a new review"""
+    form = request.get_json()
+    if not form:
+        return make_response(jsonify({"error": "Not a JSON"}), 400)
+    place = storage.get(Place, place_id)
+    if not place:
+        abort(404)
+    if "user_id" not in form:
+        return make_response(jsonify({"error": "Missing user_id"}), 400)
+    user = storage.get(User, form.get('user_id'))
+    review = Review()
+    for key, value in form.items():
+        setattr(review, key, value)
+    review.place_id = place.id
+    review.save()
+    return jsonify(review.to_dict()), 201

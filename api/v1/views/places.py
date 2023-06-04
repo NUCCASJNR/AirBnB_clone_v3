@@ -73,7 +73,6 @@ def new_post(city_id):
     if 'name' not in request.get_json():
         return make_response(jsonify({"error": "Missing name"}), 400)
     place_data = request.get_json()
-    place_data = request.get_json()
     place_data['city_id'] = city_id
     place = Place()
     user = storage.get(User, place_data['user_id'])
