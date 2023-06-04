@@ -71,10 +71,10 @@ def post_review(place_id):
     if "user_id" not in form:
         return make_response(jsonify({"error": "Missing user_id"}), 400)
     user = storage.get(User, form['user_id'])
+    form.place_id = place_id
     review = Review()
     for key, value in form.items():
         setattr(review, key, value)
-    review["place_id"] = place_id
     review.save()
     return jsonify(review.to_dict()), 201
 
