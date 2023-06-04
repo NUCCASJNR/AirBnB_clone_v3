@@ -74,7 +74,7 @@ def post_review(place_id):
     review = Review()
     for key, value in form.items():
         setattr(review, key, value)
-    review.place_id = place.id
+    review['place_id'] = place.id
     review.save()
     return jsonify(review.to_dict()), 201
 
