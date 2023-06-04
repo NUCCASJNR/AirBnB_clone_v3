@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """
-a new view for the link between Place objects and Amenity objects that handles all
- default RESTFul API actions
+a new view for the link between Place objects and Amenity objects
+that handles all default RESTFul API actions
 """
 from models import storage
 from api.v1.views import app_views
@@ -9,7 +9,8 @@ from flask import jsonify, abort, make_response, request
 from models.place import Place
 from models.amenity import Amenity
 
-@app_views.route("/places/<place_id>/amenities", methods=["GET"],  
+
+@app_views.route("/places/<place_id>/amenities", methods=["GET"],
                  strict_slashes=False)
 def retrieve_amenity_using_placeid(place_id):
     """
